@@ -180,7 +180,7 @@ async function handleFormSubmission(e) {
         name: document.getElementById('app-name').value,
         dept: document.getElementById('app-dept').value,    // Added
         year: document.getElementById('app-year').value,    // Added
-        regNo: document.getElementById('app-regno').value,  // Added
+        regNo: document.getElementById('app-regNo').value,  // Added
         email: document.getElementById('app-email').value,
         essayResponse: document.getElementById('app-essay').value,
         

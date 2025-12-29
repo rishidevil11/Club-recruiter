@@ -43,25 +43,27 @@ db.once('open', () => {
 
 
 // --- API route to handle application submissions ---
-// index.js inside app.post('/api/apply')
 app.post('/api/apply', async (req, res) => {
     try {
-        console.log("Data received from frontend:", req.body);
+        console.log("Full Request Body:", req.body); // Check your logs for this!
+
         const { name, dept, year, regNo, email, track, quizScore, challengeResponse, essayResponse } = req.body;
 
-        // Validation (Add new fields here)
-        if (!name || !dept || !year || !regNo || !email || !track || !essayResponse) {
-            return res.status(400).json({ success: false, message: 'All fields are required.' });
+        // Check each one individually to find the culprit
+        const required = { name, dept, year, regNo, email, track, essayResponse };
+        for (const [key, value] of Object.entries(required)) {
+            if (!value) {
+                console.log(`Missing field identified: ${key}`);
+                return res.status(400).json({ success: false, message: `Field "${key}" is missing.` });
+            }
         }
 
-        const newApplication = new Application({
-            name, dept, year, regNo, email, track, quizScore, challengeResponse, essayResponse
-        });
-
+        const newApplication = new Application(req.body);
         await newApplication.save();
+        
         res.status(201).json({ success: true, message: 'Application submitted!' });
     } catch (error) {
-        console.error(error);
+        console.error("Database Save Error:", error);
         res.status(500).json({ success: false, message: 'Server Error' });
     }
 });

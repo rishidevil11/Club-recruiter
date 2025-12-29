@@ -46,6 +46,7 @@ db.once('open', () => {
 // index.js inside app.post('/api/apply')
 app.post('/api/apply', async (req, res) => {
     try {
+        console.log("Data received from frontend:", req.body);
         const { name, dept, year, regNo, email, track, quizScore, challengeResponse, essayResponse } = req.body;
 
         // Validation (Add new fields here)

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Club Recruiter | Skill Tree Challenge</title>
+    <link rel="stylesheet" href="style.css"> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>Celestius recruitment form</h1>
+        <p>Complete the nodes below to unlock your application.</p>
+    </header>
+
+    <main class="skill-tree-container">
+        
+        <section id="node-1" class="skill-node active">
+            <h2>1. Choose Your Path</h2>
+            <div class="node-content">
+                <select id="track-select">
+                    <option value="">-- Select Role --</option>
+                    <option value="Photographer">📸 Photographer</option>
+                    <option value="Video Editor">🎬 Video Editor</option>
+                    <option value="Graphic Designer">🎨 Graphic Designer</option>
+                </select>
+                <button onclick="unlockNode(1)">Lock In Path</button>
+            </div>
+            <div class="node-status locked">🔒 Locked</div>
+        </section>
+
+        <div class="connector-line"></div>
+        
+        <section id="node-2" class="skill-node disabled">
+            <h2>2. Core Skill Challenge</h2>
+            <div class="node-content">
+                <p class="challenge-prompt">Select a track above to load your specialized challenge...</p>
+                <div id="challenge-area"></div> 
+                <button id="challenge-button" onclick="validateChallenge()" disabled>Complete Challenge</button>
+                <input type="hidden" id="challenge-score"> </div>
+            <div class="node-status locked">🔒 Locked</div>
+        </section>
+
+        <div class="connector-line"></div>
+
+        <section id="node-3" class="skill-node disabled">
+            <h2>3. Final Details</h2>
+            <form id="application-form">
+                <input type="text" id="app-name" placeholder="Full Name" required>
+                <input type="text" id="app-dept" placeholder="Department (e.g., CSE, EEE)" required>
+                
+                <select id="app-year" required>
+                    <option value="">-- Select Year --</option>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                </select>
+
+                <input type="text" id="app-regno" placeholder="Register Number" required>
+                <input type="email" id="app-email" placeholder="University Email" required>
+                
+                <textarea id="app-essay" rows="5" placeholder="Why do you want to join the club?" required></textarea>
+                
+                <button type="submit" id="submit-button" disabled>Submit Final Application</button>
+            </form>
+            <div id="status-message"></div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

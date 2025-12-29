@@ -1,0 +1,165 @@
+/* public/style.css - Black and Yellow Theme */
+
+:root {
+    --bg-dark: #111111; /* Deep Black */
+    --accent-yellow: #FFD700; /* Gold/Amber */
+    --accent-dark-yellow: #CCAA00; /* Darker Gold for hover/details */
+    --text-light: #F0F0F0;
+    --border-dark: #333333;
+    --success: #4CAF50;
+    --error: #FF5252;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark); 
+    color: var(--text-light);
+    margin: 0;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+h1 {
+    font-weight: 800;
+    color: var(--accent-yellow);
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.6); /* Neon glow */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.skill-tree-container {
+    width: 90%;
+    max-width: 900px;
+}
+
+/* --- Node Styling --- */
+.skill-node {
+    background: #181818;
+    border: 1px solid var(--border-dark);
+    border-left: 5px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 30px;
+    margin: 40px 0;
+    transition: all 0.5s ease;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Active Node - Highlighted */
+.skill-node.active {
+    border-left-color: var(--accent-yellow);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+    transform: scale(1.01);
+}
+
+/* Disabled Node - Faded */
+.skill-node.disabled {
+    opacity: 0.4;
+    filter: grayscale(10%);
+    pointer-events: none;
+}
+
+.node-status {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85em;
+}
+
+.node-status.locked {
+    background: var(--error);
+    color: var(--bg-dark);
+}
+
+.node-status.unlocked {
+    background: var(--success);
+    color: var(--bg-dark);
+}
+
+/* Connector Line - The Visual Flow */
+.connector-line {
+    height: 50px;
+    width: 2px;
+    background: var(--border-dark);
+    margin: 0 auto;
+    border-radius: 1px;
+}
+
+.skill-node.active + .connector-line {
+    background: var(--accent-yellow);
+}
+
+/* --- Input and Button Styling --- */
+input, textarea, select {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    border-radius: 6px;
+    border: 1px solid var(--border-dark);
+    background: #252525;
+    color: var(--text-light);
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--accent-yellow);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 6px;
+    background: var(--accent-yellow);
+    color: #111111; /* Black text on yellow button */
+    font-weight: 700;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+button:hover:not(:disabled) {
+    background: var(--accent-dark-yellow);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+}
+
+button:disabled {
+    background: #444;
+    cursor: not-allowed;
+    color: #bbb;
+}
+
+/* Code Snippet styling */
+pre {
+    background: #000;
+    padding: 15px;
+    border-radius: 4px;
+    border-left: 3px solid var(--accent-yellow);
+    overflow-x: auto;
+    font-family: monospace;
+}
+
+/* Status Messages */
+#status-message {
+    padding: 15px;
+    border-radius: 6px;
+    text-align: center;
+    margin-top: 20px;
+}
+#status-message strong {
+    font-size: 1.1em;
+}

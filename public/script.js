@@ -164,7 +164,6 @@ function validateChallenge() {
     document.getElementById('submit-button').disabled = false;
 }
 
-
 // --- Node 3: Final Submission Logic ---
 
 async function handleFormSubmission(e) {
@@ -176,8 +175,12 @@ async function handleFormSubmission(e) {
     submitButton.disabled = true;
     submitButton.textContent = 'TRANSMITTING DATA...';
     
+    // THE FIX IS HERE: Adding the 3 missing fields
     const appData = {
         name: document.getElementById('app-name').value,
+        dept: document.getElementById('app-dept').value,    // Added
+        year: document.getElementById('app-year').value,    // Added
+        regNo: document.getElementById('app-regno').value,  // Added
         email: document.getElementById('app-email').value,
         essayResponse: document.getElementById('app-essay').value,
         
@@ -187,10 +190,9 @@ async function handleFormSubmission(e) {
         challengeResponse: APPLICATION_STATE.challengeResponse,
     };
     
-    statusMessage.style.color = 'white'; // Reset color
+    statusMessage.style.color = 'white'; 
 
     try {
-        // Fetch to the server API
         const response = await fetch('/api/apply', {
             method: 'POST',
             headers: {
@@ -201,29 +203,25 @@ async function handleFormSubmission(e) {
 
         const result = await response.json();
 
-        if (response.ok) { // Status 200-299 (including 201)
-            statusMessage.style.color = 'var(--accent-yellow)'; // Use your theme's yellow for success
-            statusMessage.innerHTML = `<strong>SUCCESS [201]!</strong> ${result.message} Application ID: ${result.applicationId}`;
+        if (response.ok) { 
+            statusMessage.style.color = 'var(--accent-yellow)'; 
+            statusMessage.innerHTML = `<strong>SUCCESS [201]!</strong> ${result.message}`;
             
             document.getElementById('application-form').reset();
             
-            // OPTIONAL: Visually disable the entire node on success
             const node3 = document.getElementById('node-3');
             node3.classList.remove('active');
             node3.classList.add('disabled');
             node3.querySelector('h2').textContent = '3. Final Application Complete!';
-            
-            // Remove the form content to prevent re-submission
             document.getElementById('application-form').style.display = 'none';
 
-        }else { // Handle 400, 409, 500 errors from the server
-            statusMessage.style.color = 'var(--error)';
+        } else { 
+            statusMessage.style.color = 'red';
             statusMessage.innerHTML = `<strong>ERROR [${response.status}]:</strong> ${result.message}`;
         }
     } catch (error) {
-        // Handle genuine network errors (server is down, connection lost)
-        statusMessage.style.color = 'var(--error)';
-        statusMessage.innerHTML = `<strong>NETWORK ERROR:</strong> Could not reach the recruitment server. Please check your connection.`;
+        statusMessage.style.color = 'red';
+        statusMessage.innerHTML = `<strong>NETWORK ERROR:</strong> Could not reach the recruitment server.`;
     } finally {
         submitButton.disabled = false;
         submitButton.textContent = 'Submit Final Application';

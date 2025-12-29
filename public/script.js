@@ -7,8 +7,6 @@ const APPLICATION_STATE = {
     challengeResponse: null,
 };
 
-// public/script.js
-
 const QUIZ_DATA = {
     "Photographer": {
         prompt: "To achieve a 'shallow depth of field' (blurred background), which setting should you adjust?",
@@ -38,27 +36,6 @@ const QUIZ_DATA = {
         ]
     }
 };
-
-// Update handleFormSubmission to include new fields
-async function handleFormSubmission(e) {
-    e.preventDefault();
-    const submitButton = document.getElementById('submit-button');
-    submitButton.disabled = true;
-
-    const appData = {
-        name: document.getElementById('app-name').value,
-        dept: document.getElementById('app-dept').value,
-        year: document.getElementById('app-year').value,
-        regNo: document.getElementById('app-regno').value,
-        email: document.getElementById('app-email').value,
-        essayResponse: document.getElementById('app-essay').value,
-        track: APPLICATION_STATE.track,
-        quizScore: APPLICATION_STATE.quizScore,
-        challengeResponse: APPLICATION_STATE.challengeResponse,
-    };
-
-    // ... (keep the existing fetch logic)
-}
 
 // --- Initialization and Node 1 Logic ---
 
@@ -116,7 +93,7 @@ function loadChallenge(track) {
 
     // Create the multiple-choice radio buttons
     data.challenge.forEach((item, index) => {
-        const id = `q${track.toLowerCase()}${index}`;
+        const id = `q${track.toLowerCase().replace(/\s+/g, '')}${index}`;
         
         const input = document.createElement('input');
         input.type = 'radio';
@@ -127,7 +104,7 @@ function loadChallenge(track) {
 
         const label = document.createElement('label');
         label.setAttribute('for', id);
-        label.innerHTML = `${item.text}<br>`; // Use innerHTML to allow line breaks
+        label.innerHTML = `${item.text}<br>`;
 
         challengeArea.appendChild(input);
         challengeArea.appendChild(label);
@@ -175,12 +152,12 @@ async function handleFormSubmission(e) {
     submitButton.disabled = true;
     submitButton.textContent = 'TRANSMITTING DATA...';
     
-    // THE FIX IS HERE: Adding the 3 missing fields
+    // ✅ FIXED: Changed app-regNo to app-regno (lowercase)
     const appData = {
         name: document.getElementById('app-name').value,
-        dept: document.getElementById('app-dept').value,    // Added
-        year: document.getElementById('app-year').value,    // Added
-        regNo: document.getElementById('app-regNo').value,  // Added
+        dept: document.getElementById('app-dept').value,
+        year: document.getElementById('app-year').value,
+        regNo: document.getElementById('app-regno').value,  // ✅ FIXED
         email: document.getElementById('app-email').value,
         essayResponse: document.getElementById('app-essay').value,
         
